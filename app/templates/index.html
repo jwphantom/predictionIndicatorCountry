@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>NoteBook - Outils Décisionnel </title>
+    <meta name="description" content="">
+    <meta name="author" content="ticlekiwi">
+
+    <meta http-equiv="cleartype" content="on">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hightlightjs-dark.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&family=Source+Code+Pro:wght@300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" media="all">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" media="all">
+
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="left-menu">
+        <div class="content-logo">
+            <div class="logo">
+                <img alt="platform by Emily van den Heever from the Noun Project"
+                    title="platform by Emily van den Heever from the Noun Project"
+                    src="{{ url_for('static', filename='images/logo.png') }}" height="32" />
+                <span>Outil Décisionnel</span>
+            </div>
+            <button class="burger-menu-icon" id="button-menu-mobile">
+                <svg width="34" height="34" viewBox="0 0 100 100">
+                    <path class="line line1"
+                        d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058">
+                    </path>
+                    <path class="line line2" d="M 20,50 H 80"></path>
+                    <path class="line line3"
+                        d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942">
+                    </path>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu-closer"></div>
+        <div class="content-menu">
+            <div class="content-infos">
+                <div class="info"><b>Nom:</b> OLONGO ONDIGUI JAMES WILLIAM</div>
+                <div class="info"><b>Filière:</b> Datascience</div>
+
+            </div>
+            <ul>
+                <li class="scroll-to-link active" data-target="analyse-exploratoire">
+                    <a>Analyse Exploratoire</a>
+                </li>
+                <li class="scroll-to-link" data-target="analyse-des-correlations">
+                    <a>Analyse des correlations</a>
+                </li>
+                <li class="scroll-to-link" data-target="modélisation-prédictive">
+                    <a>Modélisation prédictive</a>
+                </li>
+                <li class="scroll-to-link" data-target="discussions">
+                    <a>Discussions</a>
+                </li>
+
+            </ul>
+
+            <div class="extra_menu">
+                <a href="/predictions">Prédictions</a>
+            </div>
+
+
+            <div class="extra_menu">
+                <a href="/statistiques">Statistiques</a>
+
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+    <div class="content-page">
+        <div class="content-code"></div>
+        <div class="content">
+            <div class="overflow-hidden content-section" id="analyse-exploratoire">
+                <h1>Analyse Exploratoire</h1>
+                <pre><code class="python">
+import pandas as pd
+
+# Load the data from the CSV file
+file_path = '/mnt/data/Life Expectancy Data.csv'
+life_expectancy_data = pd.read_csv(file_path)
+                    
+# Display the first few rows of the dataframe
+life_expectancy_data.head()
+</code>
+                </pre>
+                <p>
+                    Examiner la distribution de l'espérance de vie et des autres facteurs.
+                </p>
+                <div class="data-container">
+                    {{ data_head | safe }}
+                </div>
+                <p>
+                    Le jeu de données contient des informations sur différents pays et années, avec des variables telles
+                    que l'espérance de vie, la mortalité adulte, les décès d'infants, la consommation d'alcool, le
+                    niveau de scolarité, la population, et le PIB.
+                </p>
+            </div>
+            <div class="overflow-hidden content-section" id="analyse-des-correlations">
+                <h2>Analyse de Corrélation</h2>
+                <pre><code class="python">
+# Calcul de la matrice de corrélation
+correlation_matrix = life_expectancy_data[columns_of_interest].corr()
+
+# Affichage de la matrice de corrélation
+plt.figure(figsize=(12, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title("Correlation Matrix of Selected Factors")
+plt.show()
+                </code></pre>
+                <p>
+                    Objectif : Étudier comment ces facteurs sont corrélés avec l'espérance de vie.
+
+
+                </p>
+
+                <div class="data-container">
+                    <img src={{ correlation_image }} alt="correlation_image" />
+                </div>
+
+                <p>
+                    L'analyse de corrélation montre les relations entre l'espérance de vie et les différents facteurs
+                    sélectionnés :
+
+                <ul>
+                    <li><b>Mortalité adulte :</b> Présente une corrélation négative significative avec l'espérance de
+                        vie, ce qui indique que des taux de mortalité adultes plus élevés sont associés à une espérance
+                        de vie plus faible.</li>
+                    <li><b>Décès d'infants :</b> Également en corrélation négative avec l'espérance de vie, suggérant
+                        que les pays avec un nombre plus élevé de décès d'infants ont tendance à avoir une espérance de
+                        vie plus faible.</li>
+                    <li><b>Alcool :</b> Montre une corrélation, mais elle n'est pas aussi forte que les autres facteurs.
+                        Cela pourrait suggérer un impact moins direct ou des effets confondus avec d'autres variables.
+                    </li>
+                    <li><b>Scolarité :</b> Présente une corrélation positive significative, indiquant que des niveaux de
+                        scolarité plus élevés sont associés à une espérance de vie plus longue.</li>
+                    <li><b>Population :</b> Sa corrélation est plus faible, ce qui suggère qu'elle pourrait ne pas être
+                        un facteur prédictif majeur de l'espérance de vie.</li>
+                    <li><b>PIB :</b> Montre une corrélation positive modérée, indiquant que des niveaux de PIB plus
+                        élevés pourraient être associés à une meilleure espérance de vie.</li>
+                </ul>
+                </p>
+                <br>
+
+
+            </div>
+
+            <div class="overflow-hidden content-section" id="modélisation-prédictive">
+                <h2>Mdélisation prédictive</h2>
+                <pre><code class="python">
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Préparation des données pour la régression linéaire
+X = life_expectancy_data[columns_of_interest].drop("Life expectancy ", axis=1)
+y = life_expectancy_data["Life expectancy "]
+
+# Gestion des valeurs manquantes par imputation
+X.fillna(X.mean(), inplace=True)
+y.fillna(y.mean(), inplace=True)
+
+# Division des données en ensembles d'entraînement et de test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Création et entraînement du modèle de régression linéaire
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Prédiction et évaluation du modèle
+y_pred = model.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+# Coefficients du modèle
+coefficients = pd.Series(model.coef_, index=X.columns)
+
+mse, r2, coefficients.sort_values(ascending=False)
+
+                </code></pre>
+                <p>
+                    Objectif : Utiliser une régression linéaire pour identifier les variables les plus prédictives de
+                    l'espérance de vie.
+
+                </p>
+
+                <div class="data-container">
+                </div>
+
+                <p>
+                    L'analyse de régression linéaire fournit des informations précieuses :
+
+                <ul>
+                    <li><b>Coefficient de détermination (R²) :</b> Le modèle a un R² de 0.71, ce qui indique qu'environ
+                        71% de la variabilité de l'espérance de vie est expliquée par les variables choisies.</li>
+                    <li><b>Erreur quadratique moyenne (MSE) :</b> Le MSE est de 25.02, ce qui donne une idée de l'erreur
+                        de prédiction du modèle.</li>
+
+
+                </ul>
+
+                </p>
+
+                <p>
+                    En ce qui concerne les coefficients du modèle, voici leur impact relatif sur l'espérance de
+                    vie
+                <ul>
+                    <li><b>Scolarité :</b> Avec le coefficient le plus élevé (1.25), elle a l'impact le plus
+                        positif significatif sur l'espérance de vie. Cela confirme l'importance de l'éducation.
+                    </li>
+                    <li><b>Alcool :</b> A un effet plus modeste mais positif.</li>
+                    <li><b>PIB et Population :</b> Leurs effets sont très petits, indiquant une influence
+                        mineure sur l'espérance de vie dans ce modèle.</li>
+                    <li><b>Décès d'infants :</b> A un impact négatif modeste.</li>
+                    <li><b>Mortalité adulte :</b> Présente le plus grand impact négatif, ce qui est cohérent
+                        avec l'analyse de corrélation.</li>
+                </ul>
+                </p>
+                <br>
+
+
+            </div>
+
+            <div class="overflow-hidden content-section" id="discussions">
+                <h1>Discussions </h1>
+
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Questions</th>
+                            <th>Réponses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Les différents facteurs prédictifs initialement choisis affectent-ils réellement
+                                l’espérance de vie ?
+                            </td>
+                            <td>
+                                Oui, plusieurs facteurs semblent avoir une influence significative sur l'espérance de
+                                vie. Parmi les plus importants, on trouve la scolarité, la composition des revenus,
+                                l'indice de masse corporelle (IMC), la mortalité adulte, et l'impact du VIH/SIDA. Ces
+                                facteurs sont fortement corrélés avec l'espérance de vie, indiquant qu'ils sont
+                                d'importants prédicteurs.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Quelles sont les variables prédictives qui affectent réellement l’espérance de vie ?
+                            </td>
+                            <td>
+                                Les variables les plus influentes sont : <br>
+                                - Scolarité : Elle est très fortement corrélée à l'espérance de vie, suggérant que
+                                l'éducation est un facteur clé. <br>
+                                Composition des revenus : Une meilleure qualité de vie économique est associée à une
+                                espérance de vie plus longue. <br>
+                                - Mortalité adulte : Un taux élevé est fortement associé à une espérance de vie plus
+                                courte. <br>
+                                - VIH/SIDA : Un facteur important qui réduit l'espérance de vie. <br>
+                                IMC : Indique l'importance de la nutrition et de la santé générale.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Un pays ayant une espérance de vie plus faible (< 65) devrait-il augmenter ses dépenses
+                                    de santé afin d’améliorer sa durée de vie moyenne ?</td>
+                            <td>
+                                Bien que les dépenses de santé soient modérément corrélées à l'espérance de vie, elles
+                                ne sont pas le seul facteur déterminant. Pour les pays avec une espérance de vie
+                                inférieure à 65 ans, augmenter les dépenses de santé pourrait aider, mais il est
+                                également crucial d'aborder d'autres facteurs tels que l'éducation, la qualité de vie
+                                économique et la nutrition. Une approche globale qui intègre l'amélioration de ces
+                                domaines pourrait être plus efficace pour augmenter l'espérance de vie.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- END Github Corner Ribbon - to remove -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

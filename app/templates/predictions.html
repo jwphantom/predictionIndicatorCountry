@@ -1,0 +1,248 @@
+{% extends 'layout.html' %}
+
+{% block title %}Prédction -{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="overflow-hidden content-section">
+        <h1>INDICATEURS DE PRÉDICTION</h1>
+
+        {% if yearError %}
+        <div class="container" id="yearError">
+            <div style="margin-left: 10px;" class="row">
+                <div class="col-md-8 card_error">
+                    Les prédiction se font à partir de 2016
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        {% if error %}
+        <div class="container" id="yearError">
+            <div style="margin-left: 10px;" class="row">
+                <div class="col-md-8 card_error">
+                    Une erreur survenue, veuillez réessayer plutard
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <div class="container" id="prediction-form">
+            <div style="margin-left: 10px;" class="row">
+                <div class="col-md-8">
+
+                    <form action="/request_predictionLife" method="post">
+                        <label for="nom">Année de prédiction:</label>
+                        <input type="number" min="2016" value="2016" id="year" name="year" required>
+                        <br>
+
+                        <!-- Ajout du champ pour les pays de l'Afrique centrale -->
+                        <label for="pays">Pays:</label>
+                        <select id="pays" name="pays" required>
+                            <option value="Angola">Angola</option>
+                            <option value="Cameroon" selected>Cameroon</option>
+                            <option value="Central African Republic">Central African Republic</option>
+                            <option value="Chad">Chad</option>
+                            <option value="Congo">Congo</option>
+                            <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                            <option value="Equatorial Guinea">Equatorial Guinea</option>
+                            <option value="Gabon">Gabon</option>
+                            <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+
+                        </select>
+                        <br><br>
+                        <button type="submit" class="envoyer-button">Envoyer</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        {% if life %}
+        <div class="container" id="PredInformation">
+            <div style="margin-left: 10px;" class="row">
+
+
+                <div class="col-md-8 card_graph">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+
+                                </th>
+                                <th>{{pays}} - {{year}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Espérance de vie
+                                </td>
+                                <td>
+                                    <span class="span_bold">{{life}}</span> ans
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Taux de mortalité adulte
+                                </td>
+                                <td>
+                                    {% if adultMortality != 0 %}
+                                    <span class="span_bold">{{adultMortality}}</span> personnes âgées de 15 à 60 ans
+                                    mouront
+                                    parmi 1000 personnes de cette
+                                    tranche d'âge en {{year}}.
+                                    {% else %}
+                                    <span class="span_bold">Aucune donnée</span>
+                                    {% endif %}
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Taux de mortalité enfatile
+                                </td>
+                                <td>
+                                    {% if infantMortality != 0 %}
+                                    <span class="span_bold">{{infantMortality}}</span> enfants mouront parmi 1000 en
+                                    {{year}}.
+                                    {% else %}
+                                    <span class="span_bold">Aucune donnée</span>
+                                    {% endif %}
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Scolarisation
+                                </td>
+                                <td>
+                                    {% if schooling != 0 %}
+                                    <span class="span_bold">{{schooling}}</span> année(s) de scolarisation
+                                    {% else %}
+                                    <span class="span_bold">Aucune donnée</span>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Décès - 5ans
+                                </td>
+                                <td>
+                                    {% if underFiveDeath != 0 %}
+                                    <span class="span_bold">{{underFiveDeath}}</span> décès / an pour l'année {{year}}
+                                    {% else %}
+                                    <span class="span_bold">Aucune donnée</span>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Taux de croissance
+                                </td>
+                                <td>
+                                    {% if population != 0 %}
+                                    <span class="span_bold">{{ population }}%</span> de croissance pour l'année {{ year
+                                    }}
+                                    {% else %}
+                                    <span class="span_bold">Aucune donnée</span>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Consommation d'Alcool
+                                </td>
+                                <td>
+                                    {% if alcohol != 0 %}
+                                    <span class="span_bold">{{alcohol}}</span> litres de pure alcool consommé /
+                                    personnes
+                                    pour l'année
+                                    {{year}}
+                                    {% else %}
+                                    <span class="span_bold">Aucune donnée</span>
+                                    {% endif %}
+
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <br><br>
+            <p>
+                {{description}}
+            </p>
+        </div>
+
+
+        <br><br>
+        <div class="container" id="new-prediction-button">
+            <div style="margin-left: 10px;" class="row">
+                <button style="width: 100%;" class="envoyer-button col-8">Nouvelle
+                    Prédiction</button>
+            </div>
+        </div>
+
+
+
+        {% endif %}
+
+    </div>
+
+
+    <br>
+</div>
+<script>
+    $(document).ready(function () {
+        var life = '{{ life }}';
+        var predictionForm = $('#prediction-form');
+        var newPredictionButton = $('#new-prediction-button');
+        var predictionInformation = $('#PredInformation');
+
+
+        function showForm() {
+            predictionForm.show();
+            newPredictionButton.hide();
+            predictionInformation.hide()
+        }
+
+        function showButton() {
+            predictionForm.hide();
+            newPredictionButton.show();
+            predictionInformation.show()
+        }
+
+        if (life) {
+            // If 'life' exists, hide the form and show the new prediction button
+            showButton();
+        } else {
+            // If 'life' doesn't exist, show the form and hide the new prediction button
+            showForm();
+        }
+
+        newPredictionButton.on('click', function (event) {
+            // Show the form and hide the new prediction button when clicked
+            showForm();
+
+            // Prevent the default form submission behavior
+            event.preventDefault();
+        });
+    });
+</script>
+
+
+
+
+{% endblock %}

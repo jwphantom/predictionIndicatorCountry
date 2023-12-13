@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}Statistiqes -{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="overflow-hidden content-section">
+        <h1>GRAPHES DE PRÉDICTION 2016</h1>
+
+        {% if errorFull %}
+        <div class="container" id="yearError">
+            <div style="margin-left: 10px;" class="row">
+                <div class="col-md-8 card_error">
+                    Une erreur dans les données
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+
+
+
+        <div class="container">
+            <div style="margin-left: 10px;" class="row">
+                <div class="col-md-5 card_graph">
+                    <div class="data-container">
+                        <img class="vsGraph" src={{ esperanceVie_Scolarisation}} alt="correlation_image" />
+                    </div>
+                    <h4>Les pays de l’Afrique centrale suivant les paramètres espérance de vie et taux
+                        de scolarisation en 2016</h4>
+                </div>
+                <div class="col-md-5 card_graph">
+                    <div class="data-container">
+                        <img class="vsGraph" src={{ populationGrowth_Graphic }} alt="correlation_image" />
+                    </div>
+                    <h4>Les pays de l’Afrique centrale suivant le taux de croissance de la population en 2016</h4>
+                </div>
+            </div>
+            <br>
+            <div style="margin-left: 10px;" class="row">
+                <div class="col-md-5 card_graph">
+                    <div class="data-container">
+                        <img class="vsGraph" src={{ alcool_VS_Scolarisation }} alt="correlation_image" />
+                    </div>
+                    <h4>Les pays de l’Afrique centrale suivant le taux de scolarisation et le
+                        pourcentage de consommation d’alcool</h4>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
